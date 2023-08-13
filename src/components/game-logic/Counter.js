@@ -1,18 +1,13 @@
 export default class Counter {
   constructor(element) {
-    try {
-      this.element = element;
-    } catch (error) {
-      console.log(error);
-    }
-    this.count = this.element.querySelector('.count').textContent;
-    this.score = 0;
+    this.element = element;
+
+    this.count = this.element.querySelector('.count');
     this.failsCount = 0;
   }
 
   increaseCount() {
-    this.score += 1;
-    this.count = this.score;
+    this.count.textContent = parseInt(this.count.textContent) += 1;
   }
 
   increaseFailsCount() {

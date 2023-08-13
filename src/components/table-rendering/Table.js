@@ -1,4 +1,5 @@
 import Counter from '../game-logic/Counter';
+import Goblin from '../goblin/Goblin';
 
 export default class Table {
   constructor(element) {
@@ -10,6 +11,7 @@ export default class Table {
     this.findProperIndex = this.findProperIndex.bind(this);
     this.rotate = this.rotate.bind(this);
     this.onCellClick = this.onCellClick.bind(this);
+    this.goblinElement = Table.createGoblinElement();
 
     this.scoreCounter = new Counter(document.querySelector('.counter'));
     this.cells = [...this.element.querySelectorAll('.cell')];
@@ -18,9 +20,7 @@ export default class Table {
   }
 
   static createGoblinElement() {
-    const goblinElement = document.createElement('img');
-    goblinElement.classList.add('goblin');
-    goblinElement.src = 'https://github.com/netology-code/ahj-homeworks/blob/AHJ-50/dom/pic/goblin.png?raw=true';
+    const goblinElement = new Goblin(document.createElement('img'));
     return goblinElement;
   }
 
@@ -36,15 +36,15 @@ export default class Table {
   }
 
   rotate() {
-    const goblinElement = Table.createGoblinElement();
     const interval = setInterval(() => {
       if (this.element.querySelector('.goblin')) {
         this.scoreCounter.increaseFailsCount();
       }
+      const previousIndex = this.cells.findIndex((el) => el.classList.contains('active'));
       const index = this.findProperIndex();
-      this.cells.forEach((el) => el.classList.remove('active'));
+      this.cells[previousIndex].classList.remove('active');
       this.cells[index].classList.add('active');
-      this.cells[index].appendChild(goblinElement);
+      this.cells[index].appendChild(this.goblinElement);
     }, 1000);
     if (this.scoreCounter.failsCount > 5) {
       clearInterval(interval);
