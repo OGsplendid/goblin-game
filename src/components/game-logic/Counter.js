@@ -1,22 +1,28 @@
 export default class Counter {
   constructor(element) {
     this.element = element;
+    this.reminder = this.element.closest('.bottom-container').querySelector('.reminder');
 
-    this.count = this.element.querySelector('.count');
     this.failsCount = 0;
   }
 
   increaseCount() {
-    this.count.textContent = parseInt(this.count.textContent) += 1;
+    this.count = this.element.querySelector('.count');
+    this.count.textContent = Number(this.count.textContent) + 1;
   }
 
   increaseFailsCount() {
-    const reminder = this.element.closest('.bottom-container').querySelector('.reminder');
     this.failsCount += 1;
     if (this.failsCount > 5) {
-      reminder.classList.remove('hidden');
-      reminder.textContent = 'You failed! Click on any cell to start over';
+      this.reminder.classList.remove('hidden');
+      this.reminder.textContent = 'You failed! Click here to start over';
     }
-    // reminder.classList.add('hidden');
+  }
+
+  reset() {
+    this.count = this.element.querySelector('.count');
+    this.count.textContent = 0;
+    this.failsCount = 0;
+    this.reminder.classList.add('hidden');
   }
 }
