@@ -36,7 +36,7 @@
 .bottom-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .counter {
@@ -51,9 +51,11 @@
 }
 
 .reminder {
-  display: block;
+  width: 100px;
+  min-height: 50px;
   margin-left: 50px;
-  font-size: 30px;
+  display: block;
+  font-size: 20px;
   font-weight: bold;
   color: red;
   cursor: pointer;

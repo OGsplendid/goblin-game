@@ -1,18 +1,21 @@
-import Counter from '../game-logic/Counter';
+import Counter from '../counter/Counter';
 import Goblin from '../goblin/Goblin';
 
 export default class Table {
   constructor(element) {
     this.element = element;
-    this.cells = [...this.element.querySelectorAll('.cell')];
     this.interval = null;
+    this.failsCount = 0;
 
+    this.cells = [...this.element.querySelectorAll('.cell')];
+    this.reminder = document.querySelector('.reminder');
     this.scoreCounter = new Counter(document.querySelector('.counter'));
 
     this.onCellClick = this.onCellClick.bind(this);
     this.element.addEventListener('click', this.onCellClick);
+    this.reminder = document.querySelector('.reminder');
 
-    document.querySelector('.reminder').onclick = () => {
+    this.reminder.onclick = () => {
       this.scoreCounter.reset();
       this.startGame();
     };
@@ -54,10 +57,12 @@ export default class Table {
   checkGameStatus() {
     if (this.scoreCounter.failsCount > 5) {
       this.endGame();
+      this.reminder.classList.remove('hidden');
     }
   }
 
   startGame() {
+    this.reminder.classList.add('hidden');
     this.scoreCounter.reset();
     this.rotate();
   }
